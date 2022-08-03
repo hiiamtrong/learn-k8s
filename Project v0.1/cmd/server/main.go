@@ -12,14 +12,15 @@ import (
 func main() {
 
 	gin.SetMode(gin.ReleaseMode)
+
 	config.Init()
 
 	app := gin.Default()
 
+	app.LoadHTMLGlob("templates/*")
+
 	app.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello World",
-		})
+		c.HTML(http.StatusOK, "index.html", nil)
 	})
 
 	log.Fatal(run(app))

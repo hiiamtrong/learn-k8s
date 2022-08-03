@@ -23,6 +23,7 @@ FROM golang:1.18 as RUNNER
 WORKDIR /usr/src/app
 COPY --from=BUILDER /usr/src/app/bin/* .
 COPY --from=BUILDER /usr/src/app/.env . 
+COPY --from=BUILDER /usr/src/app/templates ./templates
 ARG PORT=3333
 ENV PORT $PORT
 
