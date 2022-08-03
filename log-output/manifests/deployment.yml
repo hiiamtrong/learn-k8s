@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: log-output-dep
+
+spec:
+  selector:
+    matchLabels:
+      app: log-output
+
+  template:
+    metadata:
+      labels:
+        app: log-output
+    spec:
+      containers:
+      - name: log-output
+        image: hiiamtrong/log-output:latest
+
+    

@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: todo-simple-dep
+spec:
+  selector:
+    matchLabels:
+      app: todo-simple
+  template:
+    metadata:
+      labels:
+        app: todo-simple
+    spec:
+      containers:
+        - name: todo-simple
+          image: hiiamtrong/todo-simple:latest
