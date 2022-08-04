@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: log-output-ing
+  labels:
+    name: log-output-ing
+spec:
+  rules:
+    - http:
+        paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: log-output-svc
+              port: 
+                number: 3000
