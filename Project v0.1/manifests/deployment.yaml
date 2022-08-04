@@ -3,6 +3,8 @@ kind: Deployment
 
 metadata:
   name: todo-simple-dep
+  labels:
+    app: todo-simple
 spec:
   selector:
     matchLabels:

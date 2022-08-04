@@ -3,14 +3,13 @@ kind: Service
 
 metadata:
   name: todo-simple-svc
+  labels:
+    app: todo-simple
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: todo-simple
-
   ports:
-    - name: http
-      nodePort: 30080
-      protocol: TCP
-      port: 2222
-      targetPort: 3333
+      - protocol: TCP
+        port: 2222
+        targetPort: 3333
