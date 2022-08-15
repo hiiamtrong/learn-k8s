@@ -14,6 +14,15 @@ spec:
       labels:
         app: todo-simple
     spec:
+      
+      volumes:
+        - name: todo-simple-volume
+          persistentVolumeClaim:
+            claimName: todo-simple-pvc
+
       containers:
         - name: todo-simple
           image: hiiamtrong/todo-simple:latest
+          volumeMounts:
+            - mountPath: /usr/src/app/public
+              name: todo-simple-volume
