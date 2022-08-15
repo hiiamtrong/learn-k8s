@@ -15,10 +15,4 @@ spec:
               name: log-output-svc
               port: 
                 number: 3000
-        - pathType: Prefix
-          path: "/pingpong"
-          backend:
-            service:
-              name: ping-pong-svc
-              port: 
-                number: 2223
+

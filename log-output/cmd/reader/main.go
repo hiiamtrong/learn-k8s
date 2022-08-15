@@ -2,37 +2,27 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
-	"time"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
 
 func main() {
-
 	randomStr, err := uuid.NewUUID()
-	var timeStr string
+
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 
-	go func() {
-		for {
-			timeStr = time.Now().Format("2006-01-02T15:04:05Z07:00")
-			fmt.Printf("%s: %s\n", timeStr, randomStr)
-			time.Sleep(time.Second * 5)
-		}
-	}()
-
 	app := gin.Default()
-
 	app.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"string": randomStr,
-			"time":   timeStr,
-		})
+		data := readFile()
+		c.JSON(200, fmt.Sprintf("%s: %s", randomStr, data))
+
 	})
 
 	run(app, "8080")
@@ -42,4 +32,22 @@ func main() {
 func run(app *gin.Engine, port string) error {
 	log.Println("Server started on port", port)
 	return http.ListenAndServe(fmt.Sprintf(":%s", port), app.Handler())
+}
+
+func readFile() string {
+	file, err := os.OpenFile("/tmp/writer.log", os.O_RDONLY, 0644)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	defer file.Close()
+
+	data, err := ioutil.ReadAll(file)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return string(data)
 }

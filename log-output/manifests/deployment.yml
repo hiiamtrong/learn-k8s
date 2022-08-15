@@ -16,8 +16,30 @@ spec:
       labels:
         app: log-output
     spec:
-      containers:
-      - name: log-output
-        image: hiiamtrong/log-output:latest
+      volumes:
+        - name: log-output-volume
+          emptyDir: {}
 
+      containers:
+      - name: log-output-reader
+        image: hiiamtrong/log-output:latest
+        command:
+          - "/bin/sh"
+        args:
+          - "-c"
+          - ./reader
+        volumeMounts:
+          - name: log-output-volume
+            mountPath: /tmp
+          
+      - name: log-output-writer
+        image: hiiamtrong/log-output:latest
+        command:
+          - "/bin/sh"
+        args:
+          - "-c"
+          - ./writer
+        volumeMounts:
+          - name: log-output-volume
+            mountPath: /tmp
     
