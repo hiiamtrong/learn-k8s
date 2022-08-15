@@ -11,6 +11,35 @@
       <h1>Devops with k8s</h1>
 
       <img src="/public/thumbnail.png" alt="kubernetes" width="400px" />
+      <div>
+        <input type="text" id="todo-input" />
+        <button id="todo-button">Create</button>
+      </div>
+      <ul id="todo-list"></ul>
     </div>
   </body>
+
+  <script>
+    let todos = [];
+
+    const todoInput = document.getElementById("todo-input");
+    const todoButton = document.getElementById("todo-button");
+
+    todoButton.addEventListener("click", () => {
+      const todo = todoInput.value;
+      todos.push(todo);
+      todoInput.value = "";
+      render();
+    });
+
+    function render() {
+      const todoList = document.getElementById("todo-list");
+      todoList.innerHTML = "";
+      todos.forEach((todo) => {
+        const todoItem = document.createElement("li");
+        todoItem.innerHTML = todo;
+        todoList.appendChild(todoItem);
+      });
+    }
+  </script>
 </html>
