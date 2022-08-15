@@ -17,3 +17,11 @@ spec:
       containers:
         - name: ping-pong
           image: hiiamtrong/ping-pong:latest
+          volumeMounts:
+              - name: ping-pong-volume
+                mountPath: /tmp
+                
+      volumes:
+        - name: ping-pong-volume
+          persistentVolumeClaim:
+            claimName: log-output-pvc

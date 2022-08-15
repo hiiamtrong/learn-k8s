@@ -20,8 +20,9 @@ func main() {
 
 	app := gin.Default()
 	app.GET("/", func(c *gin.Context) {
-		data := readFile()
-		c.JSON(200, fmt.Sprintf("%s: %s", randomStr, data))
+		hash := readFile("/tmp/writer.log")
+		pingCount := readFile("/tmp/pingpong.log")
+		c.JSON(200, fmt.Sprintf("%s: %s\n Ping / Pong: %s", randomStr, hash, pingCount))
 
 	})
 
@@ -34,8 +35,8 @@ func run(app *gin.Engine, port string) error {
 	return http.ListenAndServe(fmt.Sprintf(":%s", port), app.Handler())
 }
 
-func readFile() string {
-	file, err := os.OpenFile("/tmp/writer.log", os.O_RDONLY, 0644)
+func readFile(fileName string) string {
+	file, err := os.OpenFile(fileName, os.O_RDONLY, 0644)
 
 	if err != nil {
 		fmt.Println(err)

@@ -18,7 +18,9 @@ spec:
     spec:
       volumes:
         - name: log-output-volume
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: log-output-pvc
+            
 
       containers:
       - name: log-output-reader
