@@ -11,7 +11,7 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o bin/main
+RUN go build -o bin/main 
 
 
 

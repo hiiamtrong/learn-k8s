@@ -15,3 +15,10 @@ spec:
               name: todo-simple-svc
               port: 
                 number: 2222
+        - pathType: Prefix
+          path: "/api"
+          backend:
+            service:
+              name: todo-simple-svc
+              port: 
+                number: 3333

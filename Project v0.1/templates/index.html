@@ -20,24 +20,41 @@
   </body>
 
   <script>
-    let todos = [];
+    document.addEventListener("DOMContentLoaded", function () {
+      render();
+    });
 
     const todoInput = document.getElementById("todo-input");
     const todoButton = document.getElementById("todo-button");
 
     todoButton.addEventListener("click", () => {
-      const todo = todoInput.value;
-      todos.push(todo);
-      todoInput.value = "";
-      render();
+      if (todoInput.value) {
+        fetch("/api", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: todoInput.value,
+          }),
+        })
+          .then((res) => res.json())
+          .then(() => {
+            render();
+            todoInput.value = "";
+          });
+      }
     });
 
-    function render() {
+    async function render() {
       const todoList = document.getElementById("todo-list");
+      const res = await fetch("/api");
+      const data = await res.json();
+
       todoList.innerHTML = "";
-      todos.forEach((todo) => {
+      data.forEach((todo) => {
         const todoItem = document.createElement("li");
-        todoItem.innerHTML = todo;
+        todoItem.innerHTML = todo.title;
         todoList.appendChild(todoItem);
       });
     }
