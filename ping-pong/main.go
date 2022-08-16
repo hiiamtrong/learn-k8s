@@ -22,6 +22,10 @@ func main() {
 		count++
 	})
 
+	app.GET("/pingpong/count", func(c *gin.Context) {
+		c.Writer.Write([]byte(fmt.Sprint(count)))
+	})
+
 	run(app, "9090")
 
 }

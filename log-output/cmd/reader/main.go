@@ -21,8 +21,21 @@ func main() {
 	app := gin.Default()
 	app.GET("/", func(c *gin.Context) {
 		hash := readFile("/tmp/writer.log")
-		pingCount := readFile("/tmp/pingpong.log")
-		c.JSON(200, fmt.Sprintf("%s: %s\n Ping / Pong: %s", randomStr, hash, pingCount))
+		res, err := http.Get("http://ping-pong-svc:2223/pingpong/count")
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		data, err := ioutil.ReadAll(res.Body)
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(200, fmt.Sprintf("%s: %s\n Ping / Pong: %s", randomStr, hash, string(data)))
 
 	})
 
