@@ -21,8 +21,21 @@ spec:
             claimName: todo-simple-pvc
 
       containers:
-        - name: todo-simple
+        - name: todo-simple-client
           image: hiiamtrong/todo-simple:latest
+          command:
+            - "/bin/sh"
+          args:
+            - -c
+            - ./client
           volumeMounts:
             - mountPath: /usr/src/app/public
               name: todo-simple-volume
+
+        - name: todo-simple-server
+          image: hiiamtrong/todo-simple:latest
+          command:
+            - "/bin/sh"
+          args:
+            - -c
+            - ./server

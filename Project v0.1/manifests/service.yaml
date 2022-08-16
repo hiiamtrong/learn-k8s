@@ -12,4 +12,10 @@ spec:
   ports:
       - protocol: TCP
         port: 2222
-        targetPort: 3333
+        targetPort: 8080
+        name: client
+  
+      - protocol: TCP
+        port: 3333
+        targetPort: 9090
+        name: server
