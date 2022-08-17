@@ -4,6 +4,7 @@ metadata:
   name: todo-simple-ing
   labels:
     app: todo-simple
+  namespace: todo-ns 
 spec:
   rules:
     - http:

@@ -5,6 +5,7 @@ metadata:
   name: todo-simple-dep
   labels:
     app: todo-simple
+  namespace: todo-ns 
 spec:
   selector:
     matchLabels:

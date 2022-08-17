@@ -5,6 +5,7 @@ metadata:
   name: todo-simple-svc
   labels:
     app: todo-simple
+  namespace: todo-ns 
 spec:
   type: ClusterIP
   selector:
