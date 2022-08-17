@@ -3,6 +3,8 @@ kind: Deployment
 
 metadata:
   name: ping-pong-dep
+  namespace: log-output-ns
+
   labels:
     app: ping-pong
 spec:

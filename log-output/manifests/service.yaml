@@ -4,6 +4,7 @@ metadata:
   name: log-output-svc
   labels:
     app: log-output
+  namespace: log-output-ns
 spec:
   type: ClusterIP
   selector:

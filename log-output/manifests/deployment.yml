@@ -3,6 +3,7 @@ kind: Deployment
 
 metadata:
   name: log-output-dep
+  namespace: log-output-ns
   labels:
     app: log-output
 
