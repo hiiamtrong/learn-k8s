@@ -1,10 +1,15 @@
 package config
 
-import "github.com/spf13/viper"
+import (
+	"fmt"
+
+	"github.com/spf13/viper"
+)
 
 type Config struct {
-	PortClient string `mapstructure:"port_client"`
-	PortServer string `mapstructure:"port_server"`
+	PortClient string `mapstructure:"port_client" env:"PORT_CLIENT"`
+	PortServer string `mapstructure:"port_server" env:"PORT_SERVER"`
+	ApiKey     string `mapstructure:"api_key" env:"API_KEY"`
 }
 
 var Cfg Config
@@ -27,4 +32,6 @@ func Init() {
 	if err != nil {
 		panic(err)
 	}
+
+	fmt.Println(Cfg)
 }

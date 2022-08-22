@@ -40,3 +40,9 @@ spec:
           args:
             - -c
             - ./server
+          env:
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: todo-simple-secret
+                  key: API_KEY
