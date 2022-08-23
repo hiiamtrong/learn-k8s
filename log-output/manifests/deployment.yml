@@ -21,6 +21,12 @@ spec:
         - name: log-output-volume
           persistentVolumeClaim:
             claimName: log-output-pvc
+        - name: log-output-env
+          configMap:
+            name: log-output-cm
+            items:
+              - key: .env
+                path: .env
             
 
       containers:
@@ -34,6 +40,10 @@ spec:
         volumeMounts:
           - name: log-output-volume
             mountPath: /tmp
+          
+          - name: log-output-env
+            mountPath: /usr/src/app/.env
+            subPath: .env
           
       - name: log-output-writer
         image: hiiamtrong/log-output:latest

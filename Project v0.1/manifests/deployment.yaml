@@ -20,6 +20,12 @@ spec:
         - name: todo-simple-volume
           persistentVolumeClaim:
             claimName: todo-simple-pvc
+        - name: config
+          configMap:
+            name: todo-simple-cm
+            items:
+              - key: .env
+                path: .env
 
       containers:
         - name: todo-simple-client
@@ -33,16 +39,23 @@ spec:
             - mountPath: /usr/src/app/public
               name: todo-simple-volume
 
+            - mountPath: /usr/src/app/.env
+              subPath: .env
+              readOnly: true
+              name: config
+
+
         - name: todo-simple-server
           image: hiiamtrong/todo-simple:latest
+          volumeMounts:
+            - mountPath: /usr/src/app/.env
+              subPath: .env
+              readOnly: true
+              name: config
           command:
             - "/bin/sh"
           args:
             - -c
             - ./server
-          env:
-            - name: API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: todo-simple-secret
-                  key: API_KEY
+          
+      

@@ -7,11 +7,14 @@ import (
 	"net/http"
 	"os"
 
+	"log-output/config"
+
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
 
 func main() {
+	config.Init()
 	randomStr, err := uuid.NewUUID()
 
 	if err != nil {
@@ -35,7 +38,7 @@ func main() {
 			return
 		}
 
-		c.JSON(200, fmt.Sprintf("%s: %s\n Ping / Pong: %s", randomStr, hash, string(data)))
+		c.JSON(200, fmt.Sprintf("%s\n%s: %s\n Ping / Pong: %s", config.Cfg.Message, randomStr, hash, string(data)))
 
 	})
 
