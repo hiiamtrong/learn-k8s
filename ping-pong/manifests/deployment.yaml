@@ -22,8 +22,20 @@ spec:
           volumeMounts:
               - name: ping-pong-volume
                 mountPath: /tmp
+              
+              - name: ping-pong-env
+                mountPath: /usr/src/app/.env
+                subPath: .env
+
                 
       volumes:
         - name: ping-pong-volume
           persistentVolumeClaim:
             claimName: log-output-pvc
+        
+        - name: ping-pong-env
+          configMap:
+            name: pingpong-cm
+            items:
+              - key: env
+                path: .env
