@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: random-todo-cronjob
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: random-todo
+            image: hiiamtrong/todo-simple:latest
+            command:
+              - "/bin/sh"
+            args:
+              - -c
+              - ./job
+            volumeMounts:
+              - mountPath: /usr/src/app/.env
+                subPath: .env
+                name: env
+          restartPolicy: Never
+
+
+          volumes:
+            - name: env
+              configMap:
+                name: todo-simple-cm
+                items:
+                  - key: .env
+                    path: .env
+                

@@ -14,7 +14,7 @@ COPY . .
 
 RUN go build -o bin/server cmd/server/main.go
 RUN go build -o bin/client cmd/client/main.go
-
+RUN go build -o bin/job cmd/job/main.go
 
 
 FROM golang:1.18 as RUNNER
