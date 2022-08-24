@@ -8,17 +8,19 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/hiiamtrong/todo-simple/config"
+	"github.com/hiiamtrong/todo-simple/db"
+	"github.com/hiiamtrong/todo-simple/models"
+	"github.com/hiiamtrong/todo-simple/repository"
 )
 
-type Todo struct {
-	Title string `json:"title" binding:"required"`
-}
+var todoRepo = new(repository.TodoRepo)
 
 func main() {
 
 	gin.SetMode(gin.ReleaseMode)
 
 	config.Init()
+	db.Init()
 
 	app := gin.Default()
 	config := cors.DefaultConfig()
@@ -26,20 +28,32 @@ func main() {
 
 	app.Use(cors.New(config))
 
-	todos := []Todo{}
-
 	app.GET("/api", func(c *gin.Context) {
+
+		todos, err := todoRepo.GetTodos()
+
+		if err != nil {
+			c.AbortWithError(http.StatusInternalServerError, err)
+			return
+		}
+
 		c.JSON(http.StatusOK, todos)
 	})
 
 	app.POST("/api", func(c *gin.Context) {
-		todo := Todo{}
+		todo := models.Todo{}
 		if err := c.BindJSON(&todo); err != nil {
 			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
-		todos = append(todos, todo)
+		err := todoRepo.AddTodo(&todo)
+
+		if err != nil {
+			c.AbortWithError(http.StatusInternalServerError, err)
+			return
+		}
+
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Todo added",
 		})

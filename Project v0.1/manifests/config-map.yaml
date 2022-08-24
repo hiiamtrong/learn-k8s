@@ -3,7 +3,19 @@ kind: ConfigMap
 metadata:
   name: todo-simple-cm
 data:
+
+  POSTGRES_PASSWORD: todo-pw
+  POSTGRES_USER: todo-user
+  POSTGRES_DB: todo-db
+
   .env: |
     API_KEY=configmap
     PORT_CLIENT=8080
     PORT_SERVER=9090
+
+    POSTGRES_PASSWORD: todo-pw
+    POSTGRES_USER: todo-user
+    POSTGRES_DB: todo-db
+    POSTGRES_HOST: todo-postgres-svc
+    POSTGRES_PORT: "5432"
+
