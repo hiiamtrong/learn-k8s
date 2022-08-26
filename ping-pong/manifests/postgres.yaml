@@ -37,20 +37,15 @@ spec:
         - containerPort: 5432
           name: web
         volumeMounts:
-        - name: data
+        - name:  data
           mountPath: /var/lib/postgresql/data
+          subPath: postgres
       
-
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: local-path
-      resources:
-        requests:
-          storage: 1Gi
-
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: postgres-pvc
+      
 ---
 
 apiVersion: v1

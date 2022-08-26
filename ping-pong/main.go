@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/hiiamtrong/ping-ping/config"
@@ -79,19 +78,4 @@ func getLatestCounter() *model.Counter {
 		ID:    id,
 		Count: id,
 	}
-}
-
-func writeToFile(data string) {
-
-	file, err := os.OpenFile("/tmp/pingpong.log", os.O_CREATE|os.O_WRONLY, 0644)
-
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer file.Close()
-
-	if _, err = file.WriteString(data); err != nil {
-		fmt.Println(err)
-	}
-
 }
