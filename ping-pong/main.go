@@ -16,7 +16,9 @@ func main() {
 	database.Init()
 
 	app := gin.Default()
-
+	app.GET("/", func(c *gin.Context) {
+		c.JSON(200, gin.H{"message": "Hello World"})
+	})
 	app.GET("/pingpong", func(c *gin.Context) {
 		counter := getLatestCounter()
 		count := -1

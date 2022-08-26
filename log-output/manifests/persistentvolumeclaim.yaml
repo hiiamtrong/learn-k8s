@@ -4,7 +4,6 @@ metadata:
   name: log-output-pvc
   namespace: log-output-ns
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:

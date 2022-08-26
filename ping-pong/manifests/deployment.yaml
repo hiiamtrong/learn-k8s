@@ -4,7 +4,6 @@ kind: Deployment
 metadata:
   name: ping-pong-dep
 
-
   labels:
     app: ping-pong
 spec:
